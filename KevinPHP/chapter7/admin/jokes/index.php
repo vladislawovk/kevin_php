@@ -19,7 +19,7 @@ if(isset($_GET['add']))
 	catch(PDOException $e)
 	{
 		$error = 'Ошибка при извлечении списка авторов.';
-		include 'error.html.php'
+		include 'error.html.php';
 		exit();
 	}
 
@@ -261,5 +261,126 @@ if (isset($_GET['editform']))
 	exit();
 }
 
-if (isset($_POST['action']))
+if (isset($_POST['action']) and $_POST['action'] == 'Удалить')
+{
+    include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+
+    try
+    {
+        $sql = 'DELETE FROM jokecategory WHERE jokeid = :id';
+        $s = $pdo->prepare($sql);
+        $s->bindValue(':id', $_POST['id']);
+        $s->execute();
+    }
+    catch(PDOException $e)
+    {
+        $error = 'Ошибка при удалении шуток из категории.';
+        include 'error.html.php';
+        exit();
+    }
+
+    try
+    {
+        $sql = 'DELETE FROM joke WHERE id = :id';
+        $s = $pdo->prepare($sql);
+        $s->bindValue(':id', $_POST['id']);
+        $s->execute();
+    }
+    catch(PDOException $e)
+    {
+        $error = 'Ошибка при удалении шутки.';
+        include 'error.html.php';
+        exit();
+    }
+
+    header('Location: .');
+    exit();
+}
+
+if (isset($_GET['action']) and $_GET['action'] == 'search')
+{
+    include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+
+    $select = 'SELECT id, joketext';
+    $form = ' FROM joke';
+    $where = ' WHERE TRUE';
+
+    $placeholders = array();
+
+    if ($_GET['author'] != '')
+    {
+        $where .= " AND authorid = :authorid";
+        $placeholders[':authorid'] = $_GET['author'];
+    }
+
+    if ($_GET['category'] != '')
+    {
+        $form .= ' INNER JOIN jokecategory ON id = jokeid';
+        $where .= " AND categoryid = :categoryid";
+        $placeholders[':categoryid'] = $_GET['category'];
+    }
+
+    if ($_GET['text'] != '')
+    {
+        $where .= " AND joketext LIKE :joketext";
+        $placeholders[':joketext'] = '%' . $_GET['text'] . '%';
+    }
+
+    try
+    {
+        $sql = $select . $form . $where;
+        $s = $pdo->prepare($sql);
+        $s->execute($placeholders);
+    }
+    catch(PDOException $e)
+    {
+        $error = 'Ошибка при извлечении шуток.';
+        include 'error.html.php';
+        exit();
+    }
+
+    foreach ($s as $row)
+    {
+        $jokes[] = array('id' => $row['id'], 'text' => $row['joketext']);
+    }
+
+    include 'jokes.html.php';
+    exit();
+}
+
+include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+
+try
+{
+    $result = $pdo->query('SELECT id, name FROM author');
+}
+catch (PDOException $e)
+{
+    $error = 'Ошибка при извлечении записей об авторах!';
+    include 'error.html.php';
+    exit();
+}
+
+foreach ($result as $row)
+{
+    $authors[] = array('id' => $row['id'], 'name' => $row['name']);
+}
+
+try
+{
+    $result = $pdo->query('SELECT id, name FROM category');
+}
+catch (PDOException $e)
+{
+    $error = 'Ошибка при извлечении категорий из базы данных!';
+    include 'error.html.php';
+    exit();
+}
+
+foreach ($result as $row)
+{
+    $categories[] = array('id' => $row['id'], 'name' => $row['name']);
+}
+
+include 'searchform.html.php';
 
