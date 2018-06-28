@@ -64,7 +64,7 @@ if (isset($_GET['addform']))
 
 	try
 	{
-		$sql = 'INSERT INTO jokes SET
+		$sql = 'INSERT INTO joke SET
 			joketext = :joketext,
 			jokedate = CURDATE(),
 			authorid = :authorid';
@@ -75,7 +75,7 @@ if (isset($_GET['addform']))
 	}
 	catch(PDOException $e)
 	{
-		$error = 'Ошибка при добавлении шутки.';
+		$error = 'Ошибка при добавлении шутки.' . $e;
 		include 'error.html.php';
 		exit();
 	}
@@ -131,7 +131,7 @@ if (isset($_POST['action']) and $_POST['action'] == 'Редактировать'
 
 	$row = $s->fetch();
 
-	$pagetitle = 'Редактировать шутку';
+	$pageTitle = 'Редактировать шутку';
 	$action = 'editform';
 	$text = $row['joketext'];
 	$authorid = $row['authorid'];
@@ -140,7 +140,7 @@ if (isset($_POST['action']) and $_POST['action'] == 'Редактировать'
 
 	try
 	{
-		$result = $pdo->query('SELECT id, name FROM authors');
+		$result = $pdo->query('SELECT id, name FROM author');
 	}
 	catch(PDOException $e)
 	{
@@ -151,7 +151,7 @@ if (isset($_POST['action']) and $_POST['action'] == 'Редактировать'
 
 	foreach ($result as $row)
 	{
-		$authors[] = array('id' => $row[':id'], 'name' => $row[':name']);
+		$authors[] = array('id' => $row['id'], 'name' => $row['name']);
 	}
 
 	try

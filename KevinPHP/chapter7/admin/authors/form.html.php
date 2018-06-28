@@ -23,6 +23,6 @@
 			<input type="submit" value="<?php htmlout($button); ?>">
 		</div>
 	</form>
-	<p><a href="..authors">Вернуться к списку</a></p>
+	<p><a href="..">Вернуться к списку</a></p>
 </body>
 </html>

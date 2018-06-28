@@ -20,7 +20,7 @@
                             <div>
                                 <input type="hidden" name="id" value="<?php htmlout($joke['id']); ?>">
                                 <input type="submit" name="action" value="Редактировать">
-                                <input type="submit" name="action" value="Удалить ">
+                                <input type="submit" name="action" value="Удалить">
                             </div>
                         </form>
                     </td>

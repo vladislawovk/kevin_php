@@ -1,5 +1,5 @@
-<?php//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/helpers.inc.php'; 
-	include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/helpers.inc.php'; ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/helpers.inc.php'; 
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
