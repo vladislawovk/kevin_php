@@ -1,5 +1,6 @@
 <?php 
-include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/magicquotes.inc.php';
+//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/magicquotes.inc.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/magicquotes.inc.php';
 
 if(isset($_GET['add']))
 {
@@ -10,7 +11,8 @@ if(isset($_GET['add']))
 	$id = '';
 	$button = 'Добавить шутку';
 
-	include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
 	try
 	{
@@ -50,7 +52,8 @@ if(isset($_GET['add']))
 
 if (isset($_GET['addform']))
 {
-	include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
 	if ($_POST['author'] == '')
 	{
@@ -109,7 +112,8 @@ if (isset($_GET['addform']))
 
 if (isset($_POST['action']) and $_POST['action'] == 'Редактировать')
 {
-	include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
 	try
 	{
@@ -191,7 +195,8 @@ if (isset($_POST['action']) and $_POST['action'] == 'Редактировать'
 
 if (isset($_GET['editform']))
 {
-	include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
 	if ($_POST['author'] == '')
 	{
@@ -263,8 +268,10 @@ if (isset($_GET['editform']))
 
 if (isset($_POST['action']) and $_POST['action'] == 'Удалить')
 {
-    include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+    //include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
+    // Удаляем все запси, связывающие шутки с этой категорией
     try
     {
         $sql = 'DELETE FROM jokecategory WHERE jokeid = :id';
@@ -279,6 +286,7 @@ if (isset($_POST['action']) and $_POST['action'] == 'Удалить')
         exit();
     }
 
+    // Удаляем категорию
     try
     {
         $sql = 'DELETE FROM joke WHERE id = :id';
@@ -299,28 +307,30 @@ if (isset($_POST['action']) and $_POST['action'] == 'Удалить')
 
 if (isset($_GET['action']) and $_GET['action'] == 'search')
 {
-    include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+    //include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
+    // Базовое выражение SELECT.
     $select = 'SELECT id, joketext';
     $form = ' FROM joke';
     $where = ' WHERE TRUE';
 
     $placeholders = array();
 
-    if ($_GET['author'] != '')
+    if ($_GET['author'] != '') // Автор выбран
     {
         $where .= " AND authorid = :authorid";
         $placeholders[':authorid'] = $_GET['author'];
     }
 
-    if ($_GET['category'] != '')
+    if ($_GET['category'] != '') // Категория выбрана
     {
         $form .= ' INNER JOIN jokecategory ON id = jokeid';
         $where .= " AND categoryid = :categoryid";
         $placeholders[':categoryid'] = $_GET['category'];
     }
 
-    if ($_GET['text'] != '')
+    if ($_GET['text'] != '') // Была указана какая-то искомая строка
     {
         $where .= " AND joketext LIKE :joketext";
         $placeholders[':joketext'] = '%' . $_GET['text'] . '%';
@@ -348,7 +358,9 @@ if (isset($_GET['action']) and $_GET['action'] == 'search')
     exit();
 }
 
-include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+// Выводим форму поиска.
+//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
 try
 {

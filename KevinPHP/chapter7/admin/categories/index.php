@@ -1,5 +1,6 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/magicquotes.inc.php';
+//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/magicquotes.inc.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/magicquotes.inc.php';
 
 if (isset($_GET['add']))
 {
@@ -15,7 +16,8 @@ if (isset($_GET['add']))
 
 if (isset($_GET['addform']))
 {
-	include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 	try
 	{
 		$sql = 'INSERT INTO category SET name = :name';
@@ -36,11 +38,12 @@ if (isset($_GET['addform']))
 
 if (isset($_POST['action']) and $_POST['action'] == 'Редактировать')
 {
-	include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
 	try
 	{
-		$sql = 'SELECT id, name, FROM category WHERE id = :id';
+		$sql = 'SELECT id, name FROM category WHERE id = :id';
 		$s = $pdo->prepare($sql);
 		$s->bindValue(':id', $_POST['id']);
 		$s->execute();
@@ -66,7 +69,8 @@ if (isset($_POST['action']) and $_POST['action'] == 'Редактировать'
 
 if (isset($_GET['editform']))
 {
-	include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
 	try
 	{
@@ -89,7 +93,8 @@ if (isset($_GET['editform']))
 
 if (isset($_POST['action']) and $_POST['action'] == 'Удалить') 
 {
-	include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+	include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
 	// Удаляем все записи, связывающие шутки с этой категорией
 	try 
@@ -125,7 +130,8 @@ if (isset($_POST['action']) and $_POST['action'] == 'Удалить')
 	exit();
 }
 
-include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+//include $_SERVER['DOCUMENT_ROOT'] . '/KevinPHP/chapter7/admin/includes/db.inc.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/kevin_php/KevinPHP/chapter7/admin/includes/db.inc.php';
 
 try 
 {
